@@ -1,0 +1,266 @@
+
+// 2.1 Create an array of 5 integers. Print the array, count, first and last elements.
+func main21() {
+    let numbers = [10, 20, 30, 40, 50]
+
+    print(numbers)
+    print(numbers.count)
+    print(numbers.first!)
+    print(numbers.last!)
+}
+
+// 2.2 Create an array of 5 favourite fruits. Append, insert and remove.
+func main22() {
+    var fruits = ["Apple", "Mango", "Orange", "Banana", "Grapes"]
+
+    fruits.append("Pineapple")
+    print(fruits)
+
+    fruits.insert("Watermelon", at: 0)
+    print(fruits)
+
+    fruits.remove(at: 2)
+    print(fruits)
+}
+
+// 2.3 Find sum and average of an array.
+func main23() {
+    let numbers = [10, 20, 30, 40, 50]
+    var sum = 0
+
+    for number in numbers {
+        sum += number
+    }
+
+    let average = Double(sum) / Double(numbers.count)
+
+    print("Sum:", sum)
+    print("Average:", average)
+}
+
+// 2.4 Find maximum and minimum without max() or min().
+func main24() {
+    let numbers = [15, 7, 28, 3, 19]
+
+    var maximum = numbers[0]
+    var minimum = numbers[0]
+
+    for number in numbers {
+        if number > maximum {
+            maximum = number
+        }
+
+        if number < minimum {
+            minimum = number
+        }
+    }
+
+    print("Maximum:", maximum)
+    print("Minimum:", minimum)
+}
+
+// 2.5 Create a Set containing duplicate integers.
+func main25() {
+    let numbers: Set<Int> = [10, 20, 30, 20, 10, 40, 30]
+
+    print(numbers)
+    print("Count:", numbers.count)
+}
+
+// 2.6 Dictionary of 5 students and marks.
+func main26() {
+    let students = [
+        "Arun": 85,
+        "Bala": 90,
+        "Kavi": 78,
+        "Ravi": 92,
+        "Priya": 88
+    ]
+
+    for (name, mark) in students {
+        print("\(name): \(mark)")
+    }
+}
+
+// 2.7 Look up a student's mark by name.
+func main27() {
+    let students = [
+        "Arun": 85,
+        "Bala": 90,
+        "Kavi": 78,
+        "Ravi": 92,
+        "Priya": 88
+    ]
+
+    let name = "Arun"
+
+    if let mark = students[name] {
+        print(mark)
+    } else {
+        print("Not found")
+    }
+}
+
+// 2.8 Check whether a value exists in an array using contains.
+func main28() {
+    let numbers = [10, 20, 30, 40, 50]
+    let value = 30
+
+    print(numbers.contains(value))
+}
+
+// 2.9 Reverse an array without using reversed().
+func main29() {
+    let numbers = [1, 2, 3, 4, 5]
+    var reversedArray: [Int] = []
+
+    for i in stride(from: numbers.count - 1, through: 0, by: -1) {
+        reversedArray.append(numbers[i])
+    }
+
+    print(reversedArray)
+}
+
+// 2.10 Remove duplicates while keeping original order.
+func main210() {
+    let numbers = [1, 2, 3, 2, 4, 1, 5, 3]
+    var uniqueNumbers: [Int] = []
+
+    for number in numbers {
+        if !uniqueNumbers.contains(number) {
+            uniqueNumbers.append(number)
+        }
+    }
+
+    print(uniqueNumbers)
+}
+
+// 2.11 Sum of squares of even numbers from 1 to 20 using filter, map and reduce.
+func main211() {
+    let result = Array(1...20)
+        .filter { $0 % 2 == 0 }
+        .map { $0 * $0 }
+        .reduce(0, +)
+
+    print(result)
+}
+
+// 2.12 Union, intersection, subtracting and symmetric difference.
+func main212() {
+    let setA: Set<Int> = [1, 2, 3, 4, 5]
+    let setB: Set<Int> = [4, 5, 6, 7, 8]
+
+    print("Union:", setA.union(setB))
+    print("Intersection:", setA.intersection(setB))
+    print("Subtracting:", setA.subtracting(setB))
+    print("Symmetric Difference:", setA.symmetricDifference(setB))
+}
+
+// 2.13 Count the frequency of each word in a sentence.
+func main213() {
+    let sentence = "to be or not to be"
+    let words = sentence.split(separator: " ")
+    var frequency: [String: Int] = [:]
+
+    for word in words {
+        frequency[String(word), default: 0] += 1
+    }
+
+    print(frequency)
+}
+
+// 2.14 Sort students by marks in descending order and print top 3.
+func main214() {
+    let students = [
+        "Arun": 85,
+        "Bala": 90,
+        "Kavi": 78,
+        "Ravi": 92,
+        "Priya": 88
+    ]
+
+    let sortedStudents = students.sorted { $0.value > $1.value }
+
+    for student in sortedStudents.prefix(3) {
+        print("\(student.key): \(student.value)")
+    }
+}
+
+// 2.15 Find the second largest distinct element.
+func main215() {
+    let numbers = [10, 25, 8, 40, 30, 40]
+    var largest: Int?
+    var secondLargest: Int?
+
+    for number in numbers {
+        if largest == nil || number > largest! {
+            secondLargest = largest
+            largest = number
+        } else if number != largest! &&
+                    (secondLargest == nil || number > secondLargest!) {
+            secondLargest = number
+        }
+    }
+
+    if let second = secondLargest {
+        print(second)
+    } else {
+        print("No second largest element")
+    }
+}
+
+// 2.16 Create a 3x3 matrix, print row by row and sum the diagonal.
+func main216() {
+    let matrix = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+
+    var diagonalSum = 0
+
+    for i in 0..<matrix.count {
+        print(matrix[i])
+        diagonalSum += matrix[i][i]
+    }
+
+    print("Diagonal sum:", diagonalSum)
+}
+
+// 2.17 Group names by their first letter.
+func main217() {
+    let names = ["Arun", "Anu", "Bala", "Bobby", "Charlie"]
+    var groups: [Character: [String]] = [:]
+
+    for name in names {
+        if let firstLetter = name.first {
+            groups[firstLetter, default: []].append(name)
+        }
+    }
+
+    print(groups)
+}
+
+// 2.18 Shopping cart: calculate total bill.
+func main218() {
+    let prices: [String: Double] = [
+        "Apple": 20.0,
+        "Milk": 30.0,
+        "Bread": 25.0,
+        "Eggs": 60.0
+    ]
+
+    let itemsBought = ["Apple", "Milk", "Bread", "Eggs", "Apple"]
+    var total = 0.0
+
+    for item in itemsBought {
+        if let price = prices[item] {
+            total += price
+        } else {
+            print("\(item) not found")
+        }
+    }
+
+    print("Total bill: ₹\(total)")
+}
+
