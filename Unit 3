@@ -1,0 +1,430 @@
+
+// 3.1 Enum Direction with Switch
+enum Direction {
+    case north, south, east, west
+}
+
+func main31() {
+    let direction = Direction.north
+
+    switch direction {
+    case .north:
+        print("Moving North")
+    case .south:
+        print("Moving South")
+    case .east:
+        print("Moving East")
+    case .west:
+        print("Moving West")
+    }
+}
+
+// 3.2 Enum Weekday with Raw Values
+enum Weekday: Int {
+    case monday = 1
+    case tuesday, wednesday, thursday, friday, saturday, sunday
+}
+
+func main32() {
+    let day = Weekday.wednesday
+    print(day.rawValue)
+
+    if let selectedDay = Weekday(rawValue: 5) {
+        print(selectedDay)
+    }
+}
+
+// 3.3 Struct Student with Two Instances
+struct Student {
+    var name: String
+    var rollNumber: Int
+    var marks: Double
+
+    func displayDetails() {
+        print("Name: \(name), Roll Number: \(rollNumber), Marks: \(marks)")
+    }
+}
+
+func main33() {
+    let student1 = Student(name: "Arun", rollNumber: 101, marks: 85)
+    let student2 = Student(name: "Priya", rollNumber: 102, marks: 92)
+
+    student1.displayDetails()
+    student2.displayDetails()
+}
+
+// 3.4 Student Method isPassed()
+struct StudentPass {
+    var name: String
+    var marks: Double
+
+    func isPassed() -> Bool {
+        return marks >= 40
+    }
+}
+
+func main34() {
+    let student = StudentPass(name: "Arun", marks: 75)
+    print(student.isPassed())
+}
+
+// 3.5 Rectangle with Computed Property
+struct Rectangle {
+    var width: Double
+    var height: Double
+
+    var area: Double {
+        return width * height
+    }
+}
+
+func main35() {
+    let rectangle = Rectangle(width: 10, height: 5)
+    print(rectangle.area)
+}
+
+// 3.6 Class Person
+class Person {
+    var name: String
+    var age: Int
+
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+
+    func introduce() {
+        print("My name is \(name) and I am \(age) years old.")
+    }
+}
+
+func main36() {
+    let person = Person(name: "Arun", age: 22)
+    person.introduce()
+}
+
+// 3.7 Class Car with Accelerate and Brake
+class Car {
+    var brand: String
+    var speed: Int
+
+    init(brand: String, speed: Int = 0) {
+        self.brand = brand
+        self.speed = speed
+    }
+
+    func accelerate() {
+        speed += 10
+        print("Speed: \(speed)")
+    }
+
+    func brake() {
+        speed = max(0, speed - 10)
+        print("Speed: \(speed)")
+    }
+}
+
+func main37() {
+    let car = Car(brand: "Toyota")
+    car.accelerate()
+    car.brake()
+}
+
+// 3.8 Enum Planet with CaseIterable
+enum Planet: CaseIterable {
+    case mercury, venus, earth, mars
+    case jupiter, saturn, uranus, neptune
+
+    var orderFromSun: Int {
+        switch self {
+        case .mercury: return 1
+        case .venus: return 2
+        case .earth: return 3
+        case .mars: return 4
+        case .jupiter: return 5
+        case .saturn: return 6
+        case .uranus: return 7
+        case .neptune: return 8
+        }
+    }
+}
+
+func main38() {
+    for planet in Planet.allCases {
+        print("\(planet): \(planet.orderFromSun)")
+    }
+}
+
+// 3.9 Enum PaymentMethod with Associated Values
+enum PaymentMethod {
+    case cash
+    case card(number: String)
+    case upi(id: String)
+}
+
+func processPayment(_ method: PaymentMethod) {
+    switch method {
+    case .cash:
+        print("Payment using cash")
+    case .card(let number):
+        print("Payment using card: \(number)")
+    case .upi(let id):
+        print("Payment using UPI: \(id)")
+    }
+}
+
+func main39() {
+    processPayment(.cash)
+    processPayment(.card(number: "1234"))
+    processPayment(.upi(id: "user@upi"))
+}
+
+// 3.10 BankAccount with Deposit and Withdraw
+struct BankAccount {
+    var balance: Double
+
+    mutating func deposit(amount: Double) {
+        if amount > 0 {
+            balance += amount
+        }
+    }
+
+    mutating func withdraw(amount: Double) {
+        if amount > 0 && amount <= balance {
+            balance -= amount
+        } else {
+            print("Insufficient balance or invalid amount")
+        }
+    }
+}
+
+func main310() {
+    var account = BankAccount(balance: 1000)
+    account.deposit(amount: 500)
+    account.withdraw(amount: 200)
+    print(account.balance)
+}
+
+// 3.11 Value Type vs Reference Type
+struct ValueCounter {
+    var value: Int
+}
+
+class ReferenceCounter {
+    var value: Int
+
+    init(value: Int) {
+        self.value = value
+    }
+}
+
+func main311() {
+    var originalStruct = ValueCounter(value: 10)
+    var copiedStruct = originalStruct
+    copiedStruct.value = 20
+
+    print(originalStruct.value)
+    print(copiedStruct.value)
+
+    let originalClass = ReferenceCounter(value: 10)
+    let copiedClass = originalClass
+    copiedClass.value = 20
+
+    print(originalClass.value)
+    print(copiedClass.value)
+
+    // Structs are value types, so copies are independent.
+    // Classes are reference types, so both variables refer to the same object.
+}
+
+// 3.12 Vehicle, Car and Bike Inheritance
+class Vehicle {
+    func description() -> String {
+        return "This is a vehicle"
+    }
+}
+
+class VehicleCar: Vehicle {
+    override func description() -> String {
+        return "This is a car"
+    }
+}
+
+class Bike: Vehicle {
+    override func description() -> String {
+        return "This is a bike"
+    }
+}
+
+func main312() {
+    let vehicles: [Vehicle] = [Vehicle(), VehicleCar(), Bike()]
+
+    for vehicle in vehicles {
+        print(vehicle.description())
+    }
+}
+
+// 3.13 Employee with didSet Property Observer
+class Employee {
+    var salary: Double {
+        didSet {
+            print("Salary changed from \(oldValue) to \(salary)")
+        }
+    }
+
+    init(salary: Double) {
+        self.salary = salary
+    }
+}
+
+func main313() {
+    let employee = Employee(salary: 30000)
+    employee.salary = 35000
+}
+
+// 3.14 Student with Failable Initializer
+struct ValidatedStudent {
+    var name: String
+    var marks: Double
+
+    init?(name: String, marks: Double) {
+        guard (0...100).contains(marks) else {
+            return nil
+        }
+
+        self.name = name
+        self.marks = marks
+    }
+}
+
+func main314() {
+    if let student = ValidatedStudent(name: "Arun", marks: 85) {
+        print(student.name, student.marks)
+    } else {
+        print("Invalid marks")
+    }
+}
+
+// 3.15 Book and Library
+class Book {
+    var title: String
+
+    init(title: String) {
+        self.title = title
+    }
+}
+
+class Library {
+    var books: [Book] = []
+
+    func addBook(_ book: Book) {
+        books.append(book)
+    }
+
+    func removeBook(title: String) {
+        books.removeAll { $0.title == title }
+    }
+
+    func searchBook(title: String) -> Book? {
+        return books.first { $0.title == title }
+    }
+
+    func listBooks() {
+        for book in books {
+            print(book.title)
+        }
+    }
+}
+
+func main315() {
+    let library = Library()
+
+    library.addBook(Book(title: "Swift Basics"))
+    library.addBook(Book(title: "Programming"))
+
+    library.listBooks()
+
+    if let book = library.searchBook(title: "Swift Basics") {
+        print("Found: \(book.title)")
+    }
+
+    library.removeBook(title: "Programming")
+    library.listBooks()
+}
+
+// 3.16 Static Properties and Methods
+struct MathHelper {
+    static func square(_ number: Int) -> Int {
+        return number * number
+    }
+}
+
+class Counter {
+    static var instanceCount = 0
+
+    init() {
+        Counter.instanceCount += 1
+    }
+}
+
+func main316() {
+    print(MathHelper.square(5))
+
+    let _ = Counter()
+    let _ = Counter()
+    let _ = Counter()
+
+    print(Counter.instanceCount)
+}
+
+// 3.17 Student Management System
+enum Grade: String {
+    case A, B, C, D, F
+
+    static func calculate(marks: Double) -> Grade {
+        switch marks {
+        case 90...100: return .A
+        case 80..<90: return .B
+        case 70..<80: return .C
+        case 40..<70: return .D
+        default: return .F
+        }
+    }
+}
+
+struct SchoolStudent {
+    var name: String
+    var rollNumber: Int
+    var marks: Double
+
+    var grade: Grade {
+        return Grade.calculate(marks: marks)
+    }
+}
+
+class School {
+    var students: [SchoolStudent] = []
+
+    func addStudent(_ student: SchoolStudent) {
+        students.append(student)
+    }
+
+    func printReport() {
+        let sortedStudents = students.sorted { $0.marks > $1.marks }
+
+        for student in sortedStudents {
+            print("Name: \(student.name), Roll: \(student.rollNumber), Marks: \(student.marks), Grade: \(student.grade.rawValue)")
+        }
+    }
+}
+
+func main317() {
+    let school = School()
+
+    school.addStudent(SchoolStudent(name: "Arun", rollNumber: 101, marks: 85))
+    school.addStudent(SchoolStudent(name: "Priya", rollNumber: 102, marks: 95))
+    school.addStudent(SchoolStudent(name: "Bala", rollNumber: 103, marks: 72))
+
+    school.printReport()
+}
+
